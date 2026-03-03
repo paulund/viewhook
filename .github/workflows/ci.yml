@@ -1,0 +1,59 @@
+name: CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    backend:
+        name: Backend (PHP)
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: pdo, pdo_sqlite, sqlite3, zip, mbstring, pcntl, bcmath
+                  coverage: xdebug
+
+            - name: Copy .env
+              run: cp .env.example .env
+
+            - name: Install Composer dependencies
+              run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+            - name: Generate application key
+              run: php artisan key:generate
+
+            - name: Run backend checks (lint + types + tests)
+              run: composer run test
+
+    frontend:
+        name: Frontend (Node)
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'npm'
+
+            - name: Install Node dependencies
+              run: npm ci
+
+            - name: Run frontend checks (lint + format + types + tests)
+              run: npm test

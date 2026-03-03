@@ -1,0 +1,8 @@
+node_modules
+vendor
+.claude
+public/build
+resources/js/wayfinder
+public/css/filament
+public/js/filament
+*.log

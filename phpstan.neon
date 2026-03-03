@@ -1,0 +1,24 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+        - database
+        - routes
+
+    level: 8
+
+    excludePaths:
+        - vendor
+        - tests
+    
+    ignoreErrors:
+        # Laravel Breeze Auth Controllers - user() is guaranteed non-null by auth middleware
+        -
+            message: '#Cannot (access property|call method) .* on App\\Models\\User\|null#'
+            paths:
+                - app/Http/Controllers/Auth/*
+                - app/Http/Requests/ProfileUpdateRequest.php
+        
+
