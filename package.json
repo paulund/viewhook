@@ -35,7 +35,7 @@
         "globals": "^17.4.0",
         "laravel-echo": "^2.3.0",
         "laravel-vite-plugin": "^2.0.0",
-        "postcss": "^8.4.31",
+        "postcss": "^8.5.8",
         "prettier": "^3.8.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
         "pusher-js": "^8.4.0",
