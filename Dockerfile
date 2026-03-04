@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y git zip unzip libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_sqlite
 COPY composer*.json ./
-RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --optimize-autoloader
+RUN composer install --no-dev --no-autoloader --prefer-dist --optimize-autoloader
 COPY . .
 COPY --from=node-builder /app/public/build ./public/build
 RUN composer dump-autoload --optimize --no-dev
