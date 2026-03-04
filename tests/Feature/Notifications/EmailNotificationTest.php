@@ -7,6 +7,7 @@ use App\Models\Url;
 use App\Models\User;
 use App\Notifications\NewRequestNotification;
 use Illuminate\Support\Facades\Notification;
+
 describe('Email notification dispatch via HTTP route', function (): void {
     test('it sends email notification for user with email enabled', function (): void {
         Notification::fake();
