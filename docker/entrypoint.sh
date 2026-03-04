@@ -14,8 +14,10 @@ mkdir -p /var/www/html/storage/framework/views
 chown -R www-data:www-data /var/www/html/storage
 chown -R www-data:www-data /var/www/html/bootstrap/cache
 
-# Run database migrations
-php /var/www/html/artisan migrate --force --no-interaction
+# Run database migrations (can be disabled with RUN_MIGRATIONS=false)
+if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
+    php /var/www/html/artisan migrate --force --no-interaction
+fi
 
 # Create storage symlink (ignore if already exists)
 php /var/www/html/artisan storage:link --force 2>/dev/null || true
