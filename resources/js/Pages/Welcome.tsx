@@ -139,7 +139,7 @@ export default function Welcome({
                                     className="group border-terminal-green bg-terminal-green/10 text-terminal-green hover:bg-terminal-green/20 terminal-glow-strong flex items-center gap-3 rounded-lg border px-8 py-4 font-mono text-lg transition-all"
                                 >
                                     <span className="text-terminal-green">$</span>
-                                    start --free
+                                    start
                                     <span className="transition-transform group-hover:translate-x-1">
                                         →
                                     </span>
@@ -411,7 +411,7 @@ export default function Welcome({
                                     className="group border-terminal-green bg-terminal-green/10 text-terminal-green hover:bg-terminal-green/20 terminal-glow-strong inline-flex items-center gap-3 rounded-lg border px-8 py-4 font-mono text-lg transition-all"
                                 >
                                     <span className="text-terminal-green">$</span>
-                                    signup --free
+                                    signup
                                     <span className="transition-transform group-hover:translate-x-1">
                                         →
                                     </span>
