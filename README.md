@@ -45,6 +45,8 @@ docker run -d \
 
 Visit http://localhost:8080
 
+> **Port note:** The container's nginx listens on port **8080** (not 80). Always map to `:8080` inside the container (e.g. `-p 8080:8080` or `-p 80:8080`).
+
 ## Quick Start (Development)
 
 ```bash
