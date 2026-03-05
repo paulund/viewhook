@@ -4,7 +4,9 @@ A free, self-hosted webhook testing tool. Inspect, debug, and forward HTTP reque
 
 Similar to Webhook.site and RequestBin, but open-source and self-hostable with zero external dependencies.
 
-[![CI](https://github.com/paulund/viewhook/actions/workflows/ci.yml/badge.svg)](https://github.com/paulund/viewhook/actions/workflows/ci.yml)
+[![Backend](https://github.com/paulund/viewhook/actions/workflows/backend.yml/badge.svg)](https://github.com/paulund/viewhook/actions/workflows/backend.yml)
+[![Frontend](https://github.com/paulund/viewhook/actions/workflows/frontend.yml/badge.svg)](https://github.com/paulund/viewhook/actions/workflows/frontend.yml)
+[![Docker](https://github.com/paulund/viewhook/actions/workflows/docker.yml/badge.svg)](https://github.com/paulund/viewhook/actions/workflows/docker.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.4-blue)](https://php.net)
 [![Laravel](https://img.shields.io/badge/Laravel-12-red)](https://laravel.com)
