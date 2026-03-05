@@ -1,7 +1,7 @@
 # Stage 1: Build frontend assets
 FROM node:22-alpine AS node-builder
 WORKDIR /app
-COPY package*.json ./
+COPY package*.json .npmrc ./
 RUN npm ci
 COPY . .
 # VITE_REVERB_HOST is intentionally empty so the client uses window.location.hostname at runtime.
