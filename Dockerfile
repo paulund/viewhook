@@ -1,35 +1,39 @@
-# Stage 1: Build frontend assets
-FROM node:22-alpine AS node-builder
+# Stage 1: Build — installs PHP + Node deps and compiles frontend assets
+FROM php:8.4-cli AS builder
 WORKDIR /app
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+RUN apt-get update && apt-get install -y git zip unzip libsqlite3-dev curl \
+    && rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-install pdo_sqlite
+# Install Node 22
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+# Install PHP dependencies
+COPY composer*.json ./
+RUN composer install --no-dev --no-autoloader --no-scripts --prefer-dist
+# Install Node dependencies
 COPY package*.json .npmrc ./
 RUN npm ci
+# Copy full source and build
 COPY . .
+RUN composer dump-autoload --optimize --no-dev
+# Create storage dirs (gitignored) and a minimal .env so artisan can bootstrap during npm build
+RUN mkdir -p storage/framework/views storage/framework/cache storage/framework/sessions bootstrap/cache \
+    && echo "APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" > .env
 # VITE_REVERB_HOST is intentionally empty so the client uses window.location.hostname at runtime.
 # VITE_REVERB_APP_KEY must match the REVERB_APP_KEY env var passed to the container.
 ARG VITE_REVERB_APP_KEY=viewhook
 ARG VITE_REVERB_PORT=8080
 ARG VITE_REVERB_SCHEME=http
-RUN npm run build
+RUN npm run build && rm -f .env
 
-# Stage 2: Install PHP dependencies
-FROM php:8.4-cli AS composer-builder
-WORKDIR /app
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-RUN apt-get update && apt-get install -y git zip unzip libsqlite3-dev \
-    && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install pdo_sqlite
-COPY composer*.json ./
-RUN composer install --no-dev --no-autoloader --prefer-dist --optimize-autoloader
-COPY . .
-COPY --from=node-builder /app/public/build ./public/build
-RUN composer dump-autoload --optimize --no-dev
-
-# Stage 3: Production image
+# Stage 2: Production image
 FROM php:8.4-fpm
 
 RUN apt-get update && apt-get install -y \
     nginx supervisor \
-    libsqlite3-dev libzip-dev libicu-dev \
+    libsqlite3-dev libzip-dev libicu-dev sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install pdo_sqlite opcache pcntl zip intl
@@ -42,7 +46,7 @@ opcache.validate_timestamps=0" > /usr/local/etc/php/conf.d/opcache.ini
 
 WORKDIR /var/www/html
 
-COPY --from=composer-builder --chown=www-data:www-data /app .
+COPY --from=builder --chown=www-data:www-data /app .
 
 COPY docker/nginx.conf /etc/nginx/sites-available/default
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
