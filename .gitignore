@@ -28,5 +28,5 @@ resources/js/actions
 resources/js/routes
 
 # Local Claude AI settings (machine-specific)
-.claude/settings.local.json
+.claude/
 plans
