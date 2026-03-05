@@ -8,6 +8,7 @@ Similar to Webhook.site and RequestBin, but open-source and self-hostable with z
 [![Frontend](https://github.com/paulund/viewhook/actions/workflows/frontend.yml/badge.svg)](https://github.com/paulund/viewhook/actions/workflows/frontend.yml)
 [![Docker](https://github.com/paulund/viewhook/actions/workflows/docker.yml/badge.svg)](https://github.com/paulund/viewhook/actions/workflows/docker.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/paulund/viewhook)](https://github.com/paulund/viewhook/releases/latest)
 [![PHP](https://img.shields.io/badge/PHP-8.4-blue)](https://php.net)
 [![Laravel](https://img.shields.io/badge/Laravel-12-red)](https://laravel.com)
 
@@ -90,19 +91,13 @@ See `.env.example` for the full list of available environment variables.
 
 ## Deploy
 
-### Railway
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template)
-
-### Coolify
-
-Add the image `ghcr.io/paulund/viewhook:latest`, set the required environment variables, attach a persistent volume at `/data`, and deploy.
-
 ### DigitalOcean App Platform
 
-[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new)
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://m.do.co/c/d15751233892)
 
 Use the Docker image `ghcr.io/paulund/viewhook:latest`. Attach a persistent volume at `/data` for the SQLite database.
+
+> New to DigitalOcean? Get $200 in free credit using [this referral link](https://m.do.co/c/d15751233892).
 
 ### Self-hosted (Docker)
 
